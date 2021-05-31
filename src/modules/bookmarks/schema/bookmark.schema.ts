@@ -4,7 +4,7 @@ const bookmarkSchema = new Schema(
   {
     type: {
       type: String,
-      enum: ['picture', 'video'],
+      enum: ['photo', 'video'],
       required: true,
     },
     title: {

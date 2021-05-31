@@ -6,7 +6,6 @@ import JsonSchemaService from '../services/json-schema.service';
   providers: [...jsonSchemaProviders, JsonSchemaService],
   exports: [JsonSchemaService],
 })
-class JsonSchemaModule {
-}
+class JsonSchemaModule {}
 
 export default JsonSchemaModule;

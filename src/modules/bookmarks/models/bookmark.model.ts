@@ -17,10 +17,10 @@ export class BookmarkModel {
 
   @ApiProperty({
     type: String,
-    enum: ['picture', 'video'],
+    enum: ['photo', 'video'],
     description: 'Type of the bookmark',
   })
-  type: 'picture' | 'video';
+  type: 'photo' | 'video';
 
   @ApiProperty({ description: 'Author of the bookmark' })
   author: string;

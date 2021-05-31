@@ -1,22 +1,12 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable
-} from '@nestjs/common';
-import {
-  Schema,
-  ValidationError,
-  Validator,
-  ValidatorResult
-} from 'jsonschema';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Schema, ValidationError, Validator, ValidatorResult } from 'jsonschema';
 import Errors from '../enums/errors.enum';
 
 export type ParsedValidationResult = { errors: any } & Partial<ValidatorResult>;
 
 @Injectable()
 class JsonSchemaService {
-  constructor(@Inject('JSON_SCHEMA_VALIDATOR') private validator: Validator) {
-  }
+  constructor(@Inject('JSON_SCHEMA_VALIDATOR') private validator: Validator) {}
 
   /**
    *
@@ -25,8 +15,12 @@ class JsonSchemaService {
    * @param parseError remove instance field (In case you want to hide it, move it to false)
    * @description Parse data and verify conformity from schema
    */
-  validate(data: any, schema: Schema, parseError = true,
-   throwIfError = true): ParsedValidationResult {
+  validate(
+    data: any,
+    schema: Schema,
+    parseError = true,
+    throwIfError = true,
+  ): ParsedValidationResult {
     const bodyValidation: ParsedValidationResult = this.validator.validate(data, schema);
     if (parseError) {
       bodyValidation.errors = this.parseErrors(bodyValidation);

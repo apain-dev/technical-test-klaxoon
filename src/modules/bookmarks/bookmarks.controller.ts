@@ -1,15 +1,21 @@
-import { Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import BookmarksService from './bookmarks.service';
+import { CreateBookmarkRequest } from './models/bookmarks.dto';
 
 @Controller('/bookmarks')
 @ApiTags('Bookmarks controller')
 class BookmarksController {
-  constructor(private readonly bookmarksService: BookmarksService) {}
+  constructor(private readonly bookmarksService: BookmarksService) {
+  }
 
   @Post('')
-  createBookmark() {
-    return this.bookmarksService.createOne();
+  createBookmark(@Body() body: CreateBookmarkRequest) {
+    return this.bookmarksService.createOne(body);
   }
 }
 
