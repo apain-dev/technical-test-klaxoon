@@ -1,10 +1,7 @@
 import { Logger } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
-import {
-  Schema,
-  Validator,
-} from 'jsonschema';
+import { Schema, Validator } from 'jsonschema';
 import { Subject } from 'rxjs';
 import EnvStatus from '../models/environment.model';
 
@@ -23,7 +20,7 @@ class EnvironmentService<T> {
   }
 
   // tslint:disable-next-line:variable-name
-  private _environment: (NodeJS.ProcessEnv & T) = {} as any;
+  private _environment: NodeJS.ProcessEnv & T = {} as any;
 
   public get environment(): NodeJS.ProcessEnv & T {
     return this._environment;
@@ -70,8 +67,10 @@ class EnvironmentService<T> {
    * @param customEnvironment custom environment to be added
    * @throws Error indicate environment verification failed
    */
-  public loadEnvironment(validateEnvironment = false,
-   customEnvironment: Partial<T> = {}): NodeJS.ProcessEnv & T {
+  public loadEnvironment(
+    validateEnvironment = false,
+    customEnvironment: Partial<T> = {},
+  ): NodeJS.ProcessEnv & T {
     if (!this.loadDotenv()) {
       Logger.debug('No environment found. Using default', 'Environment');
     }
@@ -93,8 +92,11 @@ class EnvironmentService<T> {
   public validateEnvironment(): boolean {
     const bodyValidation = this.validator.validate(this.environment, this._validators, true);
     if (bodyValidation.errors.length) {
-      Logger.error('Environment validation failed', JSON.stringify(bodyValidation.errors),
-       'Environment');
+      Logger.error(
+        'Environment validation failed',
+        JSON.stringify(bodyValidation.errors),
+        'Environment',
+      );
       return false;
     }
     return true;

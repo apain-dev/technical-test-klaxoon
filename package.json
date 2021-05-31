@@ -30,7 +30,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "dotenv": "^10.0.0",
-    "jsonschema": "^1.4.0"
+    "jsonschema": "^1.4.0",
+    "mongoose": "^5.12.12"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",
