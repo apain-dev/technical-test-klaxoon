@@ -1,10 +1,10 @@
-import {
-  Logger,
-  Provider,
-} from '@nestjs/common';
+import { Logger, Provider } from '@nestjs/common';
 import * as mongoose from 'mongoose';
 
-function loadConfig(): Record<'MONGO_ADDRESS' | 'MONGO_DATABASE' | 'MONGO_PASSWORD' | 'MONGO_PORT' | 'MONGO_USER', string> {
+function loadConfig(): Record<
+  'MONGO_ADDRESS' | 'MONGO_DATABASE' | 'MONGO_PASSWORD' | 'MONGO_PORT' | 'MONGO_USER',
+  string
+> {
   return {
     MONGO_ADDRESS: process.env.MONGO_ADDRESS || '127.0.0.1',
     MONGO_DATABASE: process.env.MONGO_DATABASE || '',
@@ -23,12 +23,12 @@ const databaseProviders: Provider[] = [
       const mongoConfig = loadConfig();
       if (mongoConfig.MONGO_USER.length) {
         mongoUri =
-         `mongodb://${mongoConfig.MONGO_USER}:${mongoConfig.MONGO_PASSWORD}@${mongoConfig.MONGO_ADDRESS}:`
-         + `${mongoConfig.MONGO_PORT}/${mongoConfig.MONGO_DATABASE}?authSource=admin`;
+          `mongodb://${mongoConfig.MONGO_USER}:${mongoConfig.MONGO_PASSWORD}@${mongoConfig.MONGO_ADDRESS}:` +
+          `${mongoConfig.MONGO_PORT}/${mongoConfig.MONGO_DATABASE}?authSource=admin`;
       } else {
         mongoUri =
-         `mongodb://${mongoConfig.MONGO_ADDRESS}:` +
-         +`${mongoConfig.MONGO_PORT}/${mongoConfig.MONGO_DATABASE}?authSource=admin`;
+          `mongodb://${mongoConfig.MONGO_ADDRESS}:` +
+          `${mongoConfig.MONGO_PORT}/${mongoConfig.MONGO_DATABASE}?authSource=admin`;
       }
       try {
         return mongoose.connect(mongoUri, {

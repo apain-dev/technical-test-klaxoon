@@ -1,10 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import {
-  DocumentBuilder,
-  SwaggerModule
-} from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { AppModule } from './app.module';
@@ -23,10 +20,10 @@ async function getPackageVersion(): Promise<string> {
 
 async function initSwagger(app: NestExpressApplication) {
   const options = new DocumentBuilder()
-   .setTitle('PreOrder')
-   .setDescription('API du projet PreOrder.')
-   .setVersion(await getPackageVersion())
-   .build();
+    .setTitle('PreOrder')
+    .setDescription('API du projet PreOrder.')
+    .setVersion(await getPackageVersion())
+    .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-docs/', app, document);
 }
