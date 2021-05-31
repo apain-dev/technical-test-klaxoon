@@ -21,19 +21,27 @@ import {
 } from 'rxjs/operators';
 import Errors from '../../@shared/enums/errors.enum';
 import { OEmbedResponse } from '../../@shared/models/oembed.model';
+import { Query } from '../../@shared/query';
 import JsonSchemaService from '../../@shared/services/json-schema.service';
 import OEmbedService from '../../@shared/services/oembed.service';
+import Utils from '../../utils/utils';
 import { createBookmarkSchema } from './json-schemas/bookmarks.schema';
 import { BookmarkModel } from './models/bookmark.model';
-import { CreateBookmarkRequest } from './models/bookmarks.dto';
+import {
+  CreateBookmarkRequest,
+  GetBookmarksQuery
+} from './models/bookmarks.dto';
+import bookmarkQueries from './queries/bookmarks.queries';
 
 @Injectable()
-class BookmarksService {
+class BookmarksService extends Query {
   constructor(
    @Inject('BOOKMARKS_MODEL') private readonly bookmarksModel: Model<BookmarkModel>,
    private readonly oembedService: OEmbedService,
    private readonly jsonSchemaService: JsonSchemaService,
   ) {
+    super();
+    this.queryList.push(...bookmarkQueries);
   }
 
   createOne(body: CreateBookmarkRequest) {
@@ -44,6 +52,19 @@ class BookmarksService {
        body,
      })),
      switchMap(this.createDocumentFromOEmbed.bind(this)),
+    );
+  }
+
+  findMany(query: GetBookmarksQuery): Observable<{ results: BookmarkModel[]; count: number }> {
+    return this.extractQuery(query, {
+      count: true,
+      sort: { createdAt: 1 },
+    }).pipe(
+     switchMap((extractedQueries) => {
+       return from(this.bookmarksModel.aggregate([extractedQueries]).exec()).pipe(
+        Utils.mapAggregateCount<BookmarkModel>(),
+       );
+     }),
     );
   }
 

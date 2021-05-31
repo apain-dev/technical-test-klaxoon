@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
-  Post
+  Post,
+  Query
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -16,7 +18,11 @@ import { Observable } from 'rxjs';
 import { BadRequestResponse } from '../../@shared/models/error.models';
 import BookmarksService from './bookmarks.service';
 import { BookmarkModel } from './models/bookmark.model';
-import { CreateBookmarkRequest } from './models/bookmarks.dto';
+import {
+  CreateBookmarkRequest,
+  GetBookmarksQuery,
+  GetBookmarksResponse,
+} from './models/bookmarks.dto';
 
 @Controller('/bookmarks')
 @ApiTags('Bookmarks controller')
@@ -41,8 +47,30 @@ class BookmarksController {
     return this.bookmarksService.createOne(body);
   }
 
+  @Get()
+  @ApiOkResponse({
+    description: 'List of bookmarks',
+    type: GetBookmarksResponse
+  })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+    description: 'A bad request has occurred. Most of the time, it occurred because of bad data',
+  })
+  @ApiInternalServerErrorResponse({
+    type: BadRequestResponse,
+    description: 'An internal error has occurred',
+  })
+  findBookmarks(
+   @Query() queries: GetBookmarksQuery,
+  ): Observable<{ results: BookmarkModel[]; count: number }> {
+    return this.bookmarksService.findMany(queries);
+  }
+
   @Delete(':id')
-  @ApiOkResponse({ description: 'Bookmark removed successfully', type: BookmarkModel })
+  @ApiOkResponse({
+    description: 'Bookmark removed successfully',
+    type: BookmarkModel,
+  })
   @ApiBadRequestResponse({
     type: BadRequestResponse,
     description: 'A bad request has occurred. Most of the time, it occurred because of bad data',
