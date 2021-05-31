@@ -25,7 +25,7 @@ export class BookmarkModel {
   @ApiProperty({ description: 'Author of the bookmark' })
   author: string;
 
-  @ApiProperty({description: 'Tags of the bookmark'})
+  @ApiProperty({ description: 'Tags of the bookmark' })
   tags: string[];
 
   @ApiProperty({ type: BookmarkContentDetailsModel })
