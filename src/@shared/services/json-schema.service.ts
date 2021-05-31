@@ -6,13 +6,14 @@ export type ParsedValidationResult = { errors: any } & Partial<ValidatorResult>;
 
 @Injectable()
 class JsonSchemaService {
-  constructor(@Inject('JSON_SCHEMA_VALIDATOR') private validator: Validator) {}
+  constructor(@Inject('JSON_SCHEMA_VALIDATOR') private readonly validator: Validator) {}
 
   /**
    *
    * @param data data to be parsed
    * @param schema schema to use
    * @param parseError remove instance field (In case you want to hide it, move it to false)
+   * @param throwIfError throw error if error found
    * @description Parse data and verify conformity from schema
    */
   validate(

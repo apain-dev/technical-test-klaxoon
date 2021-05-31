@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { from } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { OEmbedResponse } from '../../@shared/models/oembed.model';
 import JsonSchemaService from '../../@shared/services/json-schema.service';
 import OEmbedService from '../../@shared/services/oembed.service';
@@ -19,24 +19,32 @@ class BookmarksService {
 
   createOne(body: CreateBookmarkRequest) {
     this.jsonSchemaService.validate(body, createBookmarkSchema);
-    return this.oembedService
-      .fetchFromUrl(body.url)
-      .pipe(switchMap(this.createDocumentFromOEmbed.bind(this)));
+    return this.oembedService.fetchFromUrl(body.url).pipe(
+      map((oembedResponse) => ({
+        oembedResponse,
+        body,
+      })),
+      switchMap(this.createDocumentFromOEmbed.bind(this)),
+    );
   }
 
-  createDocumentFromOEmbed(oembedResponse: OEmbedResponse) {
+  private createDocumentFromOEmbed(bookmark: {
+    oembedResponse: OEmbedResponse;
+    body: CreateBookmarkRequest;
+  }) {
     const optionalItems = {};
-    if (oembedResponse.type === 'video') {
-      optionalItems['duration'] = oembedResponse.duration;
+    if (bookmark.oembedResponse.type === 'video') {
+      optionalItems['duration'] = bookmark.oembedResponse.duration;
     }
     return from(
       this.bookmarksModel.create({
-        type: oembedResponse.type,
-        author: oembedResponse.author_name,
-        title: oembedResponse.title,
+        type: bookmark.oembedResponse.type,
+        author: bookmark.oembedResponse.author_name,
+        title: bookmark.oembedResponse.title,
+        tags: bookmark.body.tags,
         contentDetails: {
-          width: oembedResponse.width,
-          height: oembedResponse.height,
+          width: bookmark.oembedResponse.width,
+          height: bookmark.oembedResponse.height,
           ...optionalItems,
         },
       }),

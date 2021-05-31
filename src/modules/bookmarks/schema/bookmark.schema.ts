@@ -15,6 +15,11 @@ const bookmarkSchema = new Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [String],
+      required: false,
+      default: [],
+    },
     contentDetails: {
       height: {
         type: Number,
