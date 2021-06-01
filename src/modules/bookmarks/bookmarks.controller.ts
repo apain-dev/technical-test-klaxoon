@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Query
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -27,8 +19,7 @@ import {
 @Controller('/bookmarks')
 @ApiTags('Bookmarks controller')
 class BookmarksController {
-  constructor(private readonly bookmarksService: BookmarksService) {
-  }
+  constructor(private readonly bookmarksService: BookmarksService) {}
 
   @Post('')
   @ApiCreatedResponse({
@@ -50,7 +41,7 @@ class BookmarksController {
   @Get()
   @ApiOkResponse({
     description: 'List of bookmarks',
-    type: GetBookmarksResponse
+    type: GetBookmarksResponse,
   })
   @ApiBadRequestResponse({
     type: BadRequestResponse,
@@ -61,9 +52,29 @@ class BookmarksController {
     description: 'An internal error has occurred',
   })
   findBookmarks(
-   @Query() queries: GetBookmarksQuery,
+    @Query() queries: GetBookmarksQuery,
   ): Observable<{ results: BookmarkModel[]; count: number }> {
     return this.bookmarksService.findMany(queries);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({
+    description: 'Bookmark updated successfully',
+    type: BookmarkModel,
+  })
+  @ApiBadRequestResponse({
+    type: BadRequestResponse,
+    description: 'A bad request has occurred. Most of the time, it occurred because of bad data',
+  })
+  @ApiInternalServerErrorResponse({
+    type: BadRequestResponse,
+    description: 'An internal error has occurred',
+  })
+  updateBookmark(
+    @Param('id') id: string,
+    @Body() body: CreateBookmarkRequest,
+  ): Observable<BookmarkModel> {
+    return this.bookmarksService.updateOne(id, body);
   }
 
   @Delete(':id')

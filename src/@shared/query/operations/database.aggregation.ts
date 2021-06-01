@@ -27,8 +27,11 @@ export const aggregateSkip = (skip) => [
   },
 ];
 
-export const aggregateFindDocumentByGeoloc = (coordinates: number[], maxDistance = 100000,
-  outputDistance = 'location.calculated') => ({
+export const aggregateFindDocumentByGeoloc = (
+  coordinates: number[],
+  maxDistance = 100000,
+  outputDistance = 'location.calculated',
+) => ({
   $geoNear: {
     near: {
       type: 'Point',
@@ -43,9 +46,11 @@ export const aggregateFindDocumentByGeoloc = (coordinates: number[], maxDistance
 export const AggregationPagination = (skip = 0, limit = 10) => ({
   $facet: {
     paginatedResults: [{ $skip: skip }, { $limit: limit }],
-    totalCount: [{
-      $count: 'count',
-    }],
+    totalCount: [
+      {
+        $count: 'count',
+      },
+    ],
   },
 });
 
@@ -85,8 +90,11 @@ export const addField = (newField: any) => ({ $addFields: newField });
 
 export const unset = (fields: string[]) => ({ $unset: fields });
 
-export const unwind = (path: string, includeArrayIndex = 'index',
-  preserveNullAndEmptyArrays = true) => ({
+export const unwind = (
+  path: string,
+  includeArrayIndex = 'index',
+  preserveNullAndEmptyArrays = true,
+) => ({
   $unwind: {
     path,
     includeArrayIndex,

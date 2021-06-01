@@ -1,7 +1,4 @@
-import {
-  ApiProperty,
-  ApiPropertyOptional
-} from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { DefaultQuery } from '../../../@shared/query';
 import { BookmarkModel } from './bookmark.model';
 

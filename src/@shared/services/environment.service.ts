@@ -17,6 +17,9 @@ class EnvironmentService<T> {
    */
   constructor() {
     this.validator = new Validator();
+    if (process.env?.NODE_ENV === 'test') {
+      this.dotenvPath = '.env.test';
+    }
   }
 
   // tslint:disable-next-line:variable-name
@@ -115,7 +118,7 @@ class EnvironmentService<T> {
   private loadDotenv(): boolean {
     if (fs.existsSync(this.dotenvPath)) {
       Logger.debug('Using .env file to supply config environment variables', 'Environment');
-      const output = dotenv.config({ path: '.env' });
+      const output = dotenv.config({ path: this.dotenvPath });
       if (output.error) {
         Logger.error('An error occurred during loading of .env file', '', 'Environment');
         return false;

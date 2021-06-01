@@ -1,7 +1,7 @@
 export interface OEmbedResponse {
   version: string;
 
-  type: string;
+  type: 'photo' | 'video';
 
   width: number;
 

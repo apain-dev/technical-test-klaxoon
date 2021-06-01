@@ -1,7 +1,4 @@
-import {
-  matchField,
-  Stage
-} from '../../../@shared/query';
+import { matchField, Stage } from '../../../@shared/query';
 
 const bookmarkQueries: Stage[] = [
   {
