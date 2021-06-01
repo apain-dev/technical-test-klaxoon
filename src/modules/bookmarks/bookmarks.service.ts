@@ -8,7 +8,7 @@ import { Query } from '../../@shared/query';
 import JsonSchemaService from '../../@shared/services/json-schema.service';
 import OEmbedService from '../../@shared/services/oembed.service';
 import Utils from '../../utils/utils';
-import { createBookmarkSchema } from './json-schemas/bookmarks.schema';
+import { createBookmarkSchema, updateBookmarkSchema } from './json-schemas/bookmarks.schema';
 import { BookmarkModel } from './models/bookmark.model';
 import { CreateBookmarkRequest, GetBookmarksQuery } from './models/bookmarks.dto';
 import bookmarkQueries from './queries/bookmarks.queries';
@@ -68,24 +68,26 @@ class BookmarksService extends Query {
   }
 
   updateOne(id: string, toUpdate: CreateBookmarkRequest): Observable<BookmarkModel> {
-    return this.findOne({ _id: id }, true).pipe(
-      switchMap((bookmarkDocument) =>
-        iif(
-          () => !!toUpdate?.url,
-          this.updateDocumentFromOEmbed(bookmarkDocument, toUpdate.url),
-          of(bookmarkDocument),
+    return of(this.jsonSchemaService.validate(toUpdate, updateBookmarkSchema)).pipe(
+      switchMap(
+        () => this.findOne({ _id: id }, true)),
+        switchMap((bookmarkDocument) =>
+          iif(
+            () => !!toUpdate?.url,
+            this.updateDocumentFromOEmbed(bookmarkDocument, toUpdate.url),
+            of(bookmarkDocument),
+          ),
         ),
-      ),
-      switchMap((bookmarkDocument: BookmarkModel & Document) =>
-        iif(
-          () => !!toUpdate?.tags,
-          this.updateTags(bookmarkDocument, toUpdate.tags),
-          of(bookmarkDocument),
+        switchMap((bookmarkDocument: BookmarkModel & Document) =>
+          iif(
+            () => !!toUpdate?.tags,
+            this.updateTags(bookmarkDocument, toUpdate.tags),
+            of(bookmarkDocument),
+          ),
         ),
-      ),
-      switchMap((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.save()),
-      map((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.toObject()),
-    );
+        switchMap((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.save()),
+        map((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.toObject()),
+      );
   }
 
   deleteOne(id: string): Observable<BookmarkModel> {

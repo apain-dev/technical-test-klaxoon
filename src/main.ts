@@ -31,6 +31,7 @@ async function initSwagger(app: NestExpressApplication) {
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   await initSwagger(app);
+  app.enableShutdownHooks();
   await app.listen(environmentHandler.environment.PORT);
 }
 
