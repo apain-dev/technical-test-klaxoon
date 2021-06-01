@@ -69,25 +69,24 @@ class BookmarksService extends Query {
 
   updateOne(id: string, toUpdate: CreateBookmarkRequest): Observable<BookmarkModel> {
     return of(this.jsonSchemaService.validate(toUpdate, updateBookmarkSchema)).pipe(
-      switchMap(
-        () => this.findOne({ _id: id }, true)),
-        switchMap((bookmarkDocument) =>
-          iif(
-            () => !!toUpdate?.url,
-            this.updateDocumentFromOEmbed(bookmarkDocument, toUpdate.url),
-            of(bookmarkDocument),
-          ),
+      switchMap(() => this.findOne({ _id: id }, true)),
+      switchMap((bookmarkDocument) =>
+        iif(
+          () => !!toUpdate?.url,
+          this.updateDocumentFromOEmbed(bookmarkDocument, toUpdate.url),
+          of(bookmarkDocument),
         ),
-        switchMap((bookmarkDocument: BookmarkModel & Document) =>
-          iif(
-            () => !!toUpdate?.tags,
-            this.updateTags(bookmarkDocument, toUpdate.tags),
-            of(bookmarkDocument),
-          ),
+      ),
+      switchMap((bookmarkDocument: BookmarkModel & Document) =>
+        iif(
+          () => !!toUpdate?.tags,
+          this.updateTags(bookmarkDocument, toUpdate.tags),
+          of(bookmarkDocument),
         ),
-        switchMap((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.save()),
-        map((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.toObject()),
-      );
+      ),
+      switchMap((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.save()),
+      map((bookmarkDocument: BookmarkModel & Document) => bookmarkDocument.toObject()),
+    );
   }
 
   deleteOne(id: string): Observable<BookmarkModel> {
