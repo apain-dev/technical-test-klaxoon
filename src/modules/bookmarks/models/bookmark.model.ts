@@ -8,7 +8,7 @@ export class BookmarkContentDetailsModel {
   height: number;
 
   @ApiPropertyOptional({ description: 'Duration of the media (If type is video)' })
-  duration: number;
+  duration?: number;
 }
 
 export class BookmarkModel {

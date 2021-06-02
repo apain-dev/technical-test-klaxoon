@@ -39,7 +39,7 @@ export interface QueryItem {
   priority: number;
 }
 
-export type QueryFormated = QueryItem & { value: any; key: string };
+export type QueryFormatted = QueryItem & { value: any; key: string };
 
 export class Query {
   private _pagination = {

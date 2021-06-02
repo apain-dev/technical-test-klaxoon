@@ -23,13 +23,13 @@ class EnvironmentService<T> {
   }
 
   // tslint:disable-next-line:variable-name
-  private _environment: NodeJS.ProcessEnv & T = {} as any;
+  private _environment: Partial<NodeJS.ProcessEnv & T> = {} as any;
 
-  public get environment(): NodeJS.ProcessEnv & T {
+  public get environment(): Partial<NodeJS.ProcessEnv & T> {
     return this._environment;
   }
 
-  public set environment(value: NodeJS.ProcessEnv & T) {
+  public set environment(value: Partial<NodeJS.ProcessEnv & T>) {
     this._environment = value;
   }
 
@@ -73,7 +73,7 @@ class EnvironmentService<T> {
   public loadEnvironment(
     validateEnvironment = false,
     customEnvironment: Partial<T> = {},
-  ): NodeJS.ProcessEnv & T {
+  ): Partial<NodeJS.ProcessEnv & T> {
     if (!this.loadDotenv()) {
       Logger.debug('No environment found. Using default', 'Environment');
     }
@@ -95,11 +95,9 @@ class EnvironmentService<T> {
   public validateEnvironment(): boolean {
     const bodyValidation = this.validator.validate(this.environment, this._validators, true);
     if (bodyValidation.errors.length) {
-      Logger.error(
-        'Environment validation failed',
-        JSON.stringify(bodyValidation.errors),
-        'Environment',
-      );
+      bodyValidation.errors.forEach((e) => {
+        Logger.error('Missing environment key', e.message, 'Environment');
+      });
       return false;
     }
     return true;

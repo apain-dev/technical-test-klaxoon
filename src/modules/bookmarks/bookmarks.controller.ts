@@ -14,6 +14,7 @@ import {
   CreateBookmarkRequest,
   GetBookmarksQuery,
   GetBookmarksResponse,
+  UpdateBookmarkRequest,
 } from './models/bookmarks.dto';
 
 @Controller('/bookmarks')
@@ -72,7 +73,7 @@ class BookmarksController {
   })
   updateBookmark(
     @Param('id') id: string,
-    @Body() body: CreateBookmarkRequest,
+    @Body() body: UpdateBookmarkRequest,
   ): Observable<BookmarkModel> {
     return this.bookmarksService.updateOne(id, body);
   }

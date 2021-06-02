@@ -10,7 +10,11 @@ import OEmbedService from '../../@shared/services/oembed.service';
 import Utils from '../../utils/utils';
 import { createBookmarkSchema, updateBookmarkSchema } from './json-schemas/bookmarks.schema';
 import { BookmarkModel } from './models/bookmark.model';
-import { CreateBookmarkRequest, GetBookmarksQuery } from './models/bookmarks.dto';
+import {
+  CreateBookmarkRequest,
+  GetBookmarksQuery,
+  UpdateBookmarkRequest,
+} from './models/bookmarks.dto';
 import bookmarkQueries from './queries/bookmarks.queries';
 
 @Injectable()
@@ -67,7 +71,7 @@ class BookmarksService extends Query {
     );
   }
 
-  updateOne(id: string, toUpdate: CreateBookmarkRequest): Observable<BookmarkModel> {
+  updateOne(id: string, toUpdate: UpdateBookmarkRequest): Observable<BookmarkModel> {
     return of(this.jsonSchemaService.validate(toUpdate, updateBookmarkSchema)).pipe(
       switchMap(() => this.findOne({ _id: id }, true)),
       switchMap((bookmarkDocument) =>
@@ -89,7 +93,7 @@ class BookmarksService extends Query {
     );
   }
 
-  deleteOne(id: string): Observable<BookmarkModel> {
+  deleteOne(id: string): Observable<BookmarkModel & Document> {
     return from(this.findOne({ _id: id }, true)).pipe(
       switchMap((document) => {
         return document.remove();
@@ -110,7 +114,7 @@ class BookmarksService extends Query {
         type: bookmark.oembedResponse.type,
         author: bookmark.oembedResponse.author_name,
         title: bookmark.oembedResponse.title,
-        tags: bookmark.body.tags,
+        tags: bookmark.body.tags || [],
         contentDetails: {
           width: bookmark.oembedResponse.width,
           height: bookmark.oembedResponse.height,
@@ -135,7 +139,7 @@ class BookmarksService extends Query {
         if (oembedResponse.type === 'video') {
           bookmarkDocument.contentDetails.duration = oembedResponse.duration;
         } else {
-          bookmarkDocument.contentDetails.duration = undefined;
+          bookmarkDocument.contentDetails.duration = null;
         }
         return bookmarkDocument;
       }),

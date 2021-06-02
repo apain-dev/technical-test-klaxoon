@@ -13,6 +13,17 @@ export class CreateBookmarkRequest {
   tags?: string[];
 }
 
+export class UpdateBookmarkRequest {
+  @ApiPropertyOptional({
+    description: 'Url of the video/picture',
+    example: 'http://www.flickr.com/photos/bees/2341623661/',
+  })
+  url?: string;
+
+  @ApiPropertyOptional()
+  tags?: string[];
+}
+
 export class GetBookmarksQuery extends DefaultQuery {
   @ApiPropertyOptional({ description: 'List of tags to find' })
   tags?: string[];
