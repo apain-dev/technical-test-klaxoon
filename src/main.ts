@@ -2,7 +2,9 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cors from 'cors';
 import { readFile } from 'fs/promises';
+import * as helmet from 'helmet';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import environmentHandler from './environement';
@@ -30,9 +32,13 @@ async function initSwagger(app: NestExpressApplication) {
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(helmet());
+  app.use(cors({}));
+
   await initSwagger(app);
   app.enableShutdownHooks();
   await app.listen(environmentHandler.environment.PORT);
+  Logger.debug(`API listening on ${environmentHandler.environment.PORT}`);
 }
 
 bootstrap();
