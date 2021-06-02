@@ -2,10 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.3](https://github.com/maddoctor1905/technical-test-klaxoon/compare/v0.0.2...v0.0.3) (2021-06-02)
+## [0.1.0](https://github.com/maddoctor1905/technical-test-klaxoon/compare/v0.0.2...v0.1.0) (2021-06-02)
 
 
 * **e2e:** extract bookmarks model to simply edition ([6d5d577](https://github.com/maddoctor1905/technical-test-klaxoon/commit/6d5d57742bb1af511cffbecd51991b88de039088))
+
+
+### Tests
+
+* **commands:** change commands of tests ([079e72f](https://github.com/maddoctor1905/technical-test-klaxoon/commit/079e72fcaf71cfc8bff2802a0a109560bb86cbaf))
+* **e2e:** enable e2e tests for bookmarks ([b50ca75](https://github.com/maddoctor1905/technical-test-klaxoon/commit/b50ca75d0b13654baccb33d9c56c233ec5ac1888))
+* **ut:** implement unit testing for services ([ad7586a](https://github.com/maddoctor1905/technical-test-klaxoon/commit/ad7586aa7b33f957ed315a7d699787e8686abb5e))
 
 ### 0.0.2 (2021-06-01)
 
