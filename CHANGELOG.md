@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/maddoctor1905/technical-test-klaxoon/compare/v0.0.2...v0.0.3) (2021-06-02)
+
+
+* **e2e:** extract bookmarks model to simply edition ([6d5d577](https://github.com/maddoctor1905/technical-test-klaxoon/commit/6d5d57742bb1af511cffbecd51991b88de039088))
+
 ### 0.0.2 (2021-06-01)
 
 
