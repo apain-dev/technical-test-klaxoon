@@ -1,10 +1,12 @@
 FROM nginx:stable-alpine
 
 WORKDIR /usr/src/api
+COPY . ./
 RUN ls
-COPY ./dist/ ./
 RUN apk add npm
 
-CMD ["node", "main.js"]
+RUN npm prune --production
+
+CMD ["node", "dist/main.js"]
 
 EXPOSE 80
