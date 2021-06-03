@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/maddoctor1905/technical-test-klaxoon/compare/v0.1.0...v0.2.0) (2021-06-03)
+
+
+### Features
+
+* **bookmarks:**  update schema and logic to get more data about content of the bookmark ([04a0a7f](https://github.com/maddoctor1905/technical-test-klaxoon/commit/04a0a7f03149f996c467a53d15bfd0ca4b764ef2))
+
+
+* **bookmarks:** prettier on files ([e10c38f](https://github.com/maddoctor1905/technical-test-klaxoon/commit/e10c38fae3e4cb5583962cb6657f8db257f4b70f))
+
+
+### Tests
+
+* **e2e:** change e2e to match new schema of bookmarks ([c6a5c0d](https://github.com/maddoctor1905/technical-test-klaxoon/commit/c6a5c0d5efb64c0af4cb4d8a27d6c187ff7a7fb2))
+* **ut:** change ut of oembed to match new properties ([ee560e1](https://github.com/maddoctor1905/technical-test-klaxoon/commit/ee560e1edf1abbf500bb4c094907aaab3c0a1464))
+* **ut:** change ut to match new schema of bookmark ([ea20d23](https://github.com/maddoctor1905/technical-test-klaxoon/commit/ea20d23f4f932d7a705faeae535ae04e7d278ce7))
+
 ## [0.1.0](https://github.com/maddoctor1905/technical-test-klaxoon/compare/v0.0.2...v0.1.0) (2021-06-02)
 
 
