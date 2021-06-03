@@ -8,6 +8,9 @@
 
 Javascript api for klxoon.
 
+## Live
+You can interact with live api at https://arthur-klaxoon-api.outworld.fr/api-docs
+
 ## Requirements
 
 * Local run
@@ -110,9 +113,12 @@ $ npm run test
 ```bash
 $ npm run test:e2e
 ```
+If you want to run e2e tests, please take a look at __.env.test__. You should define a running db.
+Tests will create a custom db and remove it after tests.
+
 **coverage**
 ```bash
 $ npm run test:cov
 ```
 ### Data structure
-<img alt="test" src="https://dl.enoviah.fr/Digramme-even.png"/>
+<img alt="test" src="https://files.outworld.fr/wl/?id=WpMe5Zd4iN2lrBh58RLbMs2XgIid45TN"/>
