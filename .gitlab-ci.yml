@@ -1,0 +1,64 @@
+default:
+  image: ubuntu:latest
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - ./node_modules/
+      - ./dist/
+
+# Enoviah stages for templates
+stages:
+  - init
+  - dependencies
+  - test
+  - build
+  - docker
+  - registry
+  - deploy
+  - release
+  - clean
+
+
+include:
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/init/env.gitlab-ci.yml'
+  # Dependencies
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/dependency/node.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/test/node-lint.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/build/node.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/docker/build.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/registry/docker.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/deploy/portainer.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/release/docker.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/clean/build.gitlab-ci.yml'
+
+  - project: 'devops/W-templates'
+    ref: master
+    file: '/clean/docker.gitlab-ci.yml'
+
+

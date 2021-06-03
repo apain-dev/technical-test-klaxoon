@@ -1,0 +1,29 @@
+{
+  "name": "klaxoon-test",
+  "group": "outworld",
+  "author": "Arthur",
+  "version": "0.2.0",
+  "type": "service",
+  "outDir": "./dist",
+  "workspace": [],
+  "stack": "node",
+  "lifecycles": {
+    "beforeBuild": [],
+    "afterBuild": [],
+    "beforePackaging": [],
+    "afterPackaging": []
+  },
+  "registry": "docker",
+  "deployment": {
+    "production": {
+      "env": [],
+      "network": "traefik",
+      "labels": {
+        "traefik.port": "80",
+        "traefik.frontend.rule": "Host:arthur-klaxoon-api.outworld.fr",
+        "traefik.frontend.entryPoints": "http,https",
+        "traefik.backend": "arthur-klaxoon-api.outworld.fr-production-fr"
+      }
+    }
+  }
+}

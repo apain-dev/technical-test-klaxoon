@@ -1,15 +1,10 @@
-FROM node:lts-slim
+FROM nginx:stable-alpine
 
 WORKDIR /usr/src/api
 
-COPY . .
+COPY dist/ ./
+RUN apk add npm
 
-RUN npm i
+CMD ["node", "main.js"]
 
-RUN npm run build
-
-RUN npm prune --production
-
-EXPOSE 8080
-
-CMD node dist/main.js
+EXPOSE 80

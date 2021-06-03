@@ -22,7 +22,7 @@
     },
     {
       "type": "refactor",
-      "hidden": false
+      "hidden": true
     },
     {
       "type": "perf",

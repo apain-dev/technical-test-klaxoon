@@ -13,7 +13,9 @@ services:
   api:
     restart: always
     image: node:lts-slim
-    build: ./
+    build:
+      context: .
+      dockerfile: deployment/local/Dockerfile
     container_name: technical-test-api
     hostname: api
     ports:
