@@ -1,4 +1,17 @@
 {
+  "packageFiles": [
+    {
+      "filename": ".outworld-ci.json",
+      "type": "json"
+    }
+  ],
+  "bumpFiles": [{
+    "filename": "package.json",
+    "type": "json"
+  }, {
+    "filename": ".outworld-ci.json",
+    "type": "json"
+  }],
   "types": [
     {
       "type": "feat",

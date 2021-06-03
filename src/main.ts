@@ -22,8 +22,8 @@ async function getPackageVersion(): Promise<string> {
 
 async function initSwagger(app: NestExpressApplication) {
   const options = new DocumentBuilder()
-    .setTitle('PreOrder')
-    .setDescription('API du projet PreOrder.')
+    .setTitle('Klaxoon test')
+    .setDescription('API du projet klaxoon test.')
     .setVersion(await getPackageVersion())
     .build();
   const document = SwaggerModule.createDocument(app, options);
