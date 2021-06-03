@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose';
 class AppService implements OnApplicationShutdown {
   constructor(@Inject('DATABASE_CONNECTION') private readonly db: typeof mongoose) {}
 
-  onApplicationShutdown(signal?: string): any {
+  onApplicationShutdown(): any {
     return this.db.disconnect();
   }
 }

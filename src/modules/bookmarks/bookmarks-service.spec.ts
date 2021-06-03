@@ -127,8 +127,7 @@ describe('Bookmarks service', () => {
       expect(() =>
         bookmarksService.createOne({
           url: 'https://flickr.com/test',
-          // @ts-ignore
-          tags: [8],
+          tags: [8 as any],
         }),
       ).toThrow();
     });
@@ -196,8 +195,7 @@ describe('Bookmarks service', () => {
       expect(() =>
         bookmarksService.updateOne('test', {
           url: 'https://flickr.com/22113305',
-          // @ts-ignore
-          tags: [8],
+          tags: [8 as any],
         }),
       ).toThrow();
     });
