@@ -18,7 +18,7 @@ describe('Oembed service', () => {
   });
   it('should fetch url for vimeo', function (done) {
     oembedService.fetchFromUrl('https://vimeo.com/test').subscribe((result) => {
-      expect(result).toStrictEqual({});
+      expect(result).toStrictEqual({ url: 'https://player.vimeo.com/video/undefined' });
       done();
     });
   });
@@ -31,7 +31,7 @@ describe('Oembed service', () => {
     oembedService
       .fetchFromUrl('https://flickr.com/test')
       .pipe(
-        catchError((err) => {
+        catchError(() => {
           return of(null);
         }),
       )
