@@ -1,7 +1,4 @@
-import {
-  ApiProperty,
-  ApiPropertyOptional
-} from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class BookmarkContentDetailsModel {
   @ApiProperty({ description: 'Width of the media' })
@@ -15,10 +12,10 @@ export class BookmarkContentDetailsModel {
 }
 
 export class BookmarkContentAuthor {
-  @ApiProperty({ description: 'Url to account of media\'s bookmark' })
+  @ApiProperty({ description: "Url to account of media's bookmark" })
   url: string;
 
-  @ApiProperty({ description: 'Author\'s name' })
+  @ApiProperty({ description: "Author's name" })
   name: string;
 }
 
@@ -52,7 +49,8 @@ export class BookmarkModel {
 
   @ApiProperty({
     type: String,
-    description: 'Url of the content. Can be direct link if type is photo or an iframeable link if type is video',
+    description:
+      'Url of the content. Can be direct link if type is photo or an iframeable link if type is video',
   })
   contentUrl: string;
 

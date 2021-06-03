@@ -58,7 +58,7 @@ const bookmarkSchema = new Schema(
         required: false,
       },
     },
-    contentUrl: {type: String, required: true},
+    contentUrl: { type: String, required: true },
   },
   { timestamps: true },
 );
