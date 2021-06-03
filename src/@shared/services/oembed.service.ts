@@ -1,6 +1,10 @@
 import { BadRequestException, HttpService, Injectable } from '@nestjs/common';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  tap,
+} from 'rxjs/operators';
 import Errors from '../enums/errors.enum';
 import { OEmbedResponse } from '../models/oembed.model';
 
@@ -10,6 +14,8 @@ interface OEmbedAdapter {
   matcher: RegExp;
 
   name: string;
+
+  resultMapper?: (response: OEmbedResponse) => OEmbedResponse;
 }
 
 @Injectable()
@@ -24,6 +30,7 @@ class OEmbedService {
       name: 'Vimeo',
       oembedUrl: 'https://vimeo.com/api/oembed.json',
       matcher: new RegExp(/(vimeo)/g),
+      resultMapper: (response: OEmbedResponse) => ({...response, url: `https://player.vimeo.com/video/${response.video_id}`})
     },
   ];
 
@@ -46,6 +53,7 @@ class OEmbedService {
       })
       .pipe(
         map((response) => response.data),
+        map((response) => adapter.resultMapper ? adapter.resultMapper(response) : response),
         catchError(() => {
           return throwError(
             new BadRequestException({

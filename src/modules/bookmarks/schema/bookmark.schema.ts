@@ -11,9 +11,33 @@ const bookmarkSchema = new Schema(
       type: String,
       required: true,
     },
-    author: {
+    webPage: {
       type: String,
       required: true,
+    },
+    thumbnail: {
+      url: {
+        type: String,
+        required: true,
+      },
+      width: {
+        type: Number,
+        required: true,
+      },
+      height: {
+        type: Number,
+        required: true,
+      },
+    },
+    author: {
+      url: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
     },
     tags: {
       type: [String],
@@ -34,6 +58,7 @@ const bookmarkSchema = new Schema(
         required: false,
       },
     },
+    contentUrl: {type: String, required: true},
   },
   { timestamps: true },
 );

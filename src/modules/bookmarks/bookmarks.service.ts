@@ -112,7 +112,17 @@ class BookmarksService extends Query {
     return from(
       this.bookmarksModel.create({
         type: bookmark.oembedResponse.type,
-        author: bookmark.oembedResponse.author_name,
+        webPage: bookmark.body.url,
+        contentUrl: bookmark.oembedResponse.url,
+        author: {
+          name: bookmark.oembedResponse.author_name,
+          url: bookmark.oembedResponse.author_url,
+        },
+        thumbnail: {
+          url: bookmark.oembedResponse.thumbnail_url,
+          height: bookmark.oembedResponse.thumbnail_height,
+          width: bookmark.oembedResponse.thumbnail_width,
+        },
         title: bookmark.oembedResponse.title,
         tags: bookmark.body.tags || [],
         contentDetails: {
@@ -132,8 +142,18 @@ class BookmarksService extends Query {
       switchMap(() => this.oembedService.fetchFromUrl(url)),
       map((oembedResponse) => {
         bookmarkDocument.type = oembedResponse.type;
-        bookmarkDocument.author = oembedResponse.author_name;
+        bookmarkDocument.author = {
+          name: oembedResponse.author_name,
+          url: oembedResponse.author_url,
+        };
         bookmarkDocument.title = oembedResponse.title;
+        bookmarkDocument.contentUrl = oembedResponse.url;
+        bookmarkDocument.webPage = url;
+        bookmarkDocument.thumbnail = {
+          url: oembedResponse.thumbnail_url,
+          height: oembedResponse.thumbnail_height,
+          width: oembedResponse.thumbnail_width,
+        };
         bookmarkDocument.contentDetails.width = oembedResponse.width;
         bookmarkDocument.contentDetails.height = oembedResponse.height;
         if (oembedResponse.type === 'video') {

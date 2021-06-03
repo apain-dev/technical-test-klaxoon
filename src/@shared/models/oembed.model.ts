@@ -19,5 +19,14 @@ export interface OEmbedResponse {
 
   provider_url: string;
 
+  thumbnail_url: string;
+
+  thumbnail_width: number;
+
+  thumbnail_height: number;
+
   duration?: number;
+
+  uri?: string;
+  video_id?: string;
 }
