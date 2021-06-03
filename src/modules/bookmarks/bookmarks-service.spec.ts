@@ -22,15 +22,27 @@ mockedBookmarksModel.aggregate = jest.fn(() => ({
 class BookmarkDocument implements BookmarkModel {
   tags: string[] = [];
 
-  author = 'test';
+  author = {
+    name: 'test',
+    url: 'http://test',
+  };
 
   contentDetails: BookmarkContentDetailsModel = {
     width: 200,
     height: 200,
-    duration: null,
   };
 
   title = 'test';
+
+  webPage = '';
+
+  contentUrl = 'https://live.staticflickr.com/3';
+
+  thumbnail = {
+    url: 'https://live.staticflickr.com/3123/2341623661_7c99f48bbf_q.jpg',
+    width: 150,
+    height: 150,
+  };
 
   type: 'photo' | 'video' = 'photo';
 
@@ -45,6 +57,9 @@ class BookmarkDocument implements BookmarkModel {
       contentDetails: this.contentDetails,
       title: this.title,
       type: this.type,
+      webPage: this.webPage,
+      contentUrl: this.contentUrl,
+      thumbnail: this.thumbnail,
     };
   }
 
@@ -55,18 +70,21 @@ class BookmarkDocument implements BookmarkModel {
 
 mockedBookmarksModel.findOne = jest.fn(() => of(new BookmarkDocument()));
 
-mockedOembedService.fetchFromUrl = jest.fn<Observable<OEmbedResponse>, [string]>((url: string) => {
+mockedOembedService.fetchFromUrl = jest.fn<Observable<OEmbedResponse>, [string]>(() => {
   return of({
-    url,
+    url: 'https://live.staticflickr.com/3',
     type: 'photo',
     width: 200,
     author_name: 'test',
     height: 200,
-    author_url: 'test',
+    author_url: 'http://test',
     title: 'test',
     provider_name: 'flickr',
     version: 'e',
     provider_url: 'https://flickr.com',
+    thumbnail_url: 'https://live.staticflickr.com/3123/2341623661_7c99f48bbf_q.jpg',
+    thumbnail_width: 150,
+    thumbnail_height: 150,
   });
 });
 
@@ -82,16 +100,9 @@ describe('Bookmarks service', () => {
   describe('Create one', () => {
     it('should create one document and return it', function (done) {
       bookmarksService.createOne({ url: 'https://flickr.com/test' }).subscribe((res) => {
-        expect(res).toStrictEqual({
-          type: 'photo',
-          author: 'test',
-          title: 'test',
-          tags: [],
-          contentDetails: {
-            width: 200,
-            height: 200,
-          },
-        });
+        const toCompareResult = new BookmarkDocument();
+        toCompareResult.webPage = 'https://flickr.com/test';
+        expect(res).toStrictEqual(toCompareResult.toObject());
         done();
       });
     });
@@ -102,16 +113,10 @@ describe('Bookmarks service', () => {
           tags: ['test'],
         })
         .subscribe((res) => {
-          expect(res).toStrictEqual({
-            type: 'photo',
-            author: 'test',
-            title: 'test',
-            tags: ['test'],
-            contentDetails: {
-              width: 200,
-              height: 200,
-            },
-          });
+          const expected = new BookmarkDocument();
+          expected.tags = ['test'];
+          expected.webPage = 'https://flickr.com/test';
+          expect(res).toStrictEqual(expected.toObject());
           done();
         });
     });
@@ -178,6 +183,8 @@ describe('Bookmarks service', () => {
         .updateOne('test', { url: 'https://flickr.com/22113305' })
         .subscribe((result) => {
           const toCompareResult = new BookmarkDocument();
+          toCompareResult.webPage = 'https://flickr.com/22113305';
+          toCompareResult.contentDetails = result.contentDetails;
           expect(result).toStrictEqual(toCompareResult.toObject());
           done();
         });
