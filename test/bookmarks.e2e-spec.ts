@@ -13,7 +13,15 @@ const vimeoBookmark = {
   tags: ['vimeo'],
   _id: '',
   type: 'video',
-  author: '',
+  author: { name: '', url: 'https://vimeo.com/techuser' },
+  webPage: 'https://vimeo.com/286898202',
+  contentUrl: 'https://player.vimeo.com/video/286898202',
+  thumbnail: {
+    url: 'https://i.vimeocdn.com/video/721904228_295x166',
+    height: 221,
+    width: 295,
+  },
+
   title: 'My video',
   createdAt: '',
   updatedAt: '',
@@ -28,8 +36,18 @@ const flickrBookmark = {
   tags: ['flickr'],
   _id: '',
   type: 'photo',
-  author: '',
+  author: {
+    name: '',
+    url: 'https://www.flickr.com/photos/bees/',
+  },
+  webPage: 'http://www.flickr.com/photos/bees/2341623661/',
+  contentUrl: 'https://live.staticflickr.com/3123/2341623661_7c99f48bbf_b.jpg',
   title: 'ZB8T0193',
+  thumbnail: {
+    url: 'https://live.staticflickr.com/3123/2341623661_7c99f48bbf_q.jpg',
+    height: 150,
+    width: 150,
+  },
   createdAt: '',
   updatedAt: '',
   __v: 0,
@@ -56,7 +74,7 @@ describe('BookmarksController (e2e)', () => {
         .expect((res) => {
           documentId = res.body._id;
           res.body._id = '';
-          res.body.author = '';
+          res.body.author.name = '';
           res.body.createdAt = '';
           res.body.updatedAt = '';
         })
@@ -70,7 +88,7 @@ describe('BookmarksController (e2e)', () => {
         .expect(201)
         .expect((res) => {
           res.body._id = '';
-          res.body.author = '';
+          res.body.author.name = '';
           res.body.createdAt = '';
           res.body.updatedAt = '';
         })
@@ -155,7 +173,7 @@ describe('BookmarksController (e2e)', () => {
         .expect(200)
         .expect((res) => {
           res.body._id = '';
-          res.body.author = '';
+          res.body.author.name = '';
           res.body.createdAt = '';
           res.body.updatedAt = '';
         })
@@ -171,7 +189,7 @@ describe('BookmarksController (e2e)', () => {
         .expect(200)
         .expect((res) => {
           res.body._id = '';
-          res.body.author = '';
+          res.body.author.name = '';
           res.body.createdAt = '';
           res.body.updatedAt = '';
         })
@@ -193,7 +211,7 @@ describe('BookmarksController (e2e)', () => {
         .expect(200)
         .expect((res) => {
           res.body._id = '';
-          res.body.author = '';
+          res.body.author.name = '';
           res.body.createdAt = '';
           res.body.updatedAt = '';
         })
