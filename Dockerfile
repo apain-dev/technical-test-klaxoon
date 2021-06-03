@@ -1,7 +1,7 @@
 FROM nginx:stable-alpine
 
 WORKDIR /usr/src/api
-
+RUN ls
 COPY dist/ ./
 RUN apk add npm
 
