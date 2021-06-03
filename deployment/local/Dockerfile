@@ -2,7 +2,7 @@ FROM node:lts-slim
 
 WORKDIR /usr/src/api
 
-COPY ../.. .
+COPY . .
 
 RUN npm i
 
