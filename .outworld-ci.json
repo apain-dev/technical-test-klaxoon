@@ -2,7 +2,7 @@
   "name": "klaxoon-test",
   "group": "outworld",
   "author": "Arthur",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "service",
   "outDir": "./dist",
   "workspace": [],
